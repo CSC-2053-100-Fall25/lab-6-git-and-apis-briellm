@@ -36,6 +36,25 @@ function searchStation() {
 
     // FOR TESTING: Uncomment this line to see what a successful response looks like
     // showError('API integration not yet implemented. Complete the fetch request in searchStation() function.');
+// Build the API URL
+const apiUrl = `${API_BASE_URL}?` +
+`lat=${PHILLY_LAT}&lon=${PHILLY_LON}&` +
+`search_freq=none&callsign=${callsign}&request_type=4&` +
+`pi_code=none&sig_strength=null&startMiles=none&` +
+`miles=null&format=none&rxHeight=10&measurementUnit=meters`;
+// Make the fetch request
+fetch(apiUrl)
+ .then(response => response.json())
+ .then(data => {
+ hideLoading();
+ showResults(data);
+ })
+ .catch(error => {
+ hideLoading();
+ showError('Error connecting to RadioLand API. Please try again.');
+ console.error('API Error:', error);
+ });
+
 }
 
 // Handle Enter key in search input
